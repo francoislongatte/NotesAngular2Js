@@ -1,0 +1,13 @@
+<app-form-create (createSubmit$)="create($event)"></app-form-create>
+<ul *ngIf="tabNotes" id="notesItemList" [dragula]='"bagItems"' [dragulaModel]='tabNotes' #autoscroll >
+  <li class="anNote_noteItem" *ngFor="let value of tabNotes  | orderBy: 'positionList'" >
+    <span class="draggableSpan"></span>
+    <div class="contentLi">
+      <h2 class="tile">{{value.title}}</h2>
+      <p>{{value.text}}</p>
+      <p>{{value.positionList}}</p>
+      <span class="timeNote">{{value.modified_at}}</span>
+    </div>
+  </li>
+</ul>
+
