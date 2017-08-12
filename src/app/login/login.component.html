@@ -1,15 +1,5 @@
 <div class="formLogin">
-  <form role="form" (submit)="login($event, username.value, password.value)">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" [formControl]="username" class="form-control" id="username" placeholder="Username">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input class="form-control" [formControl]="username" type="password" id="password" placeholder="Password">
-      <input class="form-control"  type="submit" value="Login" />
-    </div>
-    <span>Ou</span>
-    <a [routerLink]="['/signup']">inscrivez-vous</a>
-  </form>
+  <app-form-login (loginSubmit$)="login($event)"></app-form-login>
+  <span>Ou</span>
+  <a [routerLink]="['/signup']">inscrivez-vous</a>
 </div>

@@ -1,3 +1,12 @@
-<p>
-  signup works!
-</p>
+<script src="signup.component.ts"></script>
+<div class="formLogin">
+  <button class="form-control" (click)="back()">retour</button>
+  <form role="form" novalidate (ngSubmit)="submit(formGroupSignup.value)"  [formGroup]="formGroupSignup">
+    <input class="form-control" placeholder="Nom" type="text" name="name" formControlName="name" />
+    <input class="form-control" placeholder="email" type="email" name="email" formControlName="email" />
+    <input class="form-control" placeholder="Mot de passe" type="password" name="password" formControlName="password" />
+    <input class="form-control" type="submit" value="Inscription" />
+    <h1 *ngIf="messageRegister.dataBool">Inscription Reussie</h1>
+  </form>
+</div>
+

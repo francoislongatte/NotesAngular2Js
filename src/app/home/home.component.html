@@ -1,17 +1,13 @@
-<div>
-<!--  <CreateNote apiKey={this.props.apiKey}
-              handleNewNotes={(data) => this.handleNewNotes(data)}/>-->
-
-  <ul id="notesItemList">
-    HELLO
-    <!--{this.state.notes.map((value, index) =>
-    <li key={index} className="noteItem">
-                                <span className="draggableSpan">
-                                </span>
-      <div className="contentLi" onClick={() => this.toggleListView(value.id, index)}>
-      <h2 className="tile">{value.title}</h2>
-      <p>{value.text}</p>
-      <span className="timeNote">{value.modified_at}</span></div>-->
-
+<app-form-create (createSubmit$)="create($event)"></app-form-create>
+<ul *ngIf="tabNotes" id="notesItemList" [dragula]='"bagItems"' [dragulaModel]='tabNotes' #autoscroll >
+  <li class="anNote_noteItem" *ngFor="let value of tabNotes  | orderBy: 'positionList'" >
+    <span class="draggableSpan"></span>
+    <div class="contentLi" [routerLink]="['/modify', value.id]">
+      <h2 class="tile">{{value.title}}</h2>
+      <p>{{value.text}}</p>
+      <span class="timeNote">{{value.modified_at}}</span>
+    </div>
+    <a href="#" (click)="delete($event,value.id)" class="btn btnDelete" type="button"></a>
+  </li>
 </ul>
-</div>
+

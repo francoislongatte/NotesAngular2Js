@@ -1,82 +1,77 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit , OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import { Location } from '@angular/common';
 
 import  AjaxRequestLib  from '../_common/ajaxRequestLib.js';
 import * as Cookies from '../../../node_modules/js-cookie';
-import * as arrayMove from '../_helper/arrayMove.js';
-import * as autoScroll from '../../../node_modules/dom-autoscroller';
-import { DragulaService }  from '../../../node_modules/ng2-dragula';
-
-
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-modify',
+  templateUrl: './modify.component.html',
+  styleUrls: ['./modify.component.scss']
 })
 
-export class HomeComponent implements OnInit {
+export class ModifyComponent implements OnInit {
 
-  tabNotes: Array<any>;
-  tabParams: any;
   apiKey: string;
-  @ViewChild('autoscroll') autoscroll: ElementRef;
+  note: any;
+  id: number;
+  private sub: any;
+  private formUpdate: FormGroup;
 
-  constructor(private dragulaService: DragulaService) {
-    dragulaService.drop.subscribe((value) => {
-      this.onDrop(value.slice(1));
+
+  constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, private location: Location) {
+
+    this.formUpdate = this.formBuilder.group({
+      title:[null,Validators.required],
+      text: [null, Validators.required],
+      create_at:[null, Validators.required],
+      modified_at:[null, Validators.required],
+      status: [null, Validators.required]
     });
-
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      var scroll = autoScroll([
-        this.autoscroll.nativeElement
-      ],{
-        margin: 10,
-        maxSpeed: 10,
-        scrollWhenOutside: true,
-        autoScroll: function(){
-          //Only scroll when the pointer is down.
-          return this.down;
-          //return true;
-        }
-      });
-    },3000);
-
-    this.tabParams = {
-      handle: ".draggableSpan",
-      animation: 100,
-      chosenClass: 'chosen',
-      ghostClass: "ghost"
-    };
-
-
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id']; // (+) converts string 'id' to a number
+    });
 
     this.apiKey = (<any>Cookies).get('Auth');
-    this.getNotes();
+    this.getNote(this.id);
 
   }
 
-  private onDrop(args) {
-    let [e, el] = args;
-    // do something
-    arrayMove(this.tabNotes);
-    AjaxRequestLib.postPositionList(this.apiKey,this.tabNotes);
+  ngOnDestroy(){
+    this.sub.unsubscribe();
   }
 
-  public create(note){
-    AjaxRequestLib.createNote(this.apiKey,note,(message)=>{
+  public modifyNote(note){
+    AjaxRequestLib.putNote(this.apiKey,note.id,note.title,note.text,note.status,(message)=>{
       if(message){
-        this.getNotes();
+          this.location.back();
       }
     })
   }
 
-  private getNotes(){
-    AjaxRequestLib.getNotes(this.apiKey,(notes) => {
-      this.tabNotes = notes;
-      console.log(this.tabNotes);
+  private back(){
+    this.location.back();
+  }
+
+  private delete(){
+    let note = {};
+    (<any>note).id = this.id;
+    AjaxRequestLib.deleteNote(this.apiKey,note,(message,err)=>{
+      if(message.ok){
+          this.location.back();
+      }
+    })
+  }
+
+  private getNote(id){
+    AjaxRequestLib.getNote(this.apiKey,id,(note) => {
+      this.note = note;
+      this.formUpdate.patchValue(this.note);
     });
   }
 }

@@ -1,13 +1,18 @@
-<app-form-create (createSubmit$)="create($event)"></app-form-create>
-<ul *ngIf="tabNotes" id="notesItemList" [dragula]='"bagItems"' [dragulaModel]='tabNotes' #autoscroll >
-  <li class="anNote_noteItem" *ngFor="let value of tabNotes  | orderBy: 'positionList'" >
-    <span class="draggableSpan"></span>
-    <div class="contentLi">
-      <h2 class="tile">{{value.title}}</h2>
-      <p>{{value.text}}</p>
-      <p>{{value.positionList}}</p>
-      <span class="timeNote">{{value.modified_at}}</span>
-    </div>
-  </li>
-</ul>
-
+<!--<form className="formUpdate" onSubmit={this.submitFormModification}>
+  <label>Modifications</label>
+  <input className="form-control" required type="text" {...this.linkState('noteTitle')} />
+  <textarea className="form-control" required  {...this.linkState('noteText')} />
+  <input type="checkbox" {...this.linkCheckState('noteStatus')}/>
+  <input className="form-control" type="submit" value="Modifier" />
+  <input className="form-control" type="button" value="Supprimer"  onClick={this.handleDelete} />
+</form>-->
+<div class="showNoteDiv">
+  <input (click)="back()" class="form-control" type="button" value="retour"/>
+  <form class="formUpdate" [formGroup]="formUpdate" (ngSubmit)="modifyNote(formUpdate.value)">
+    <label>Modifications</label>
+    <input formControlName="title" class="form-control"  type="text" />
+    <textarea formControlName="text" class="form-control" ></textarea>
+    <input class="form-control" type="submit" value="Modifier" />
+    <input (click)="delete()" class="form-control" type="button" value="Supprimer"   />
+  </form>
+</div>

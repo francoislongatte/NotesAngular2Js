@@ -1,4 +1,4 @@
-import ajax from '../../../node_modules/superagent';
+import ajax  from '../../../node_modules/superagent';
 
 export default class AjaxRequestLib {
 
@@ -43,11 +43,25 @@ export default class AjaxRequestLib {
             });
     }
 
+    static createNote(apiKey,note,callback){
+      ajax.post('http://longatte.be/api/public/notes')
+        .send({title: note.title, text: note.text})
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('Authorization', apiKey )
+        .end(function(err, res){
+          callback(res);
+          console.log(JSON.parse(res.text));
+          console.log(err);
+        });
+    }
+
     static postPositionList(apiKey,notes){
         ajax.post('http://longatte.be/api/public/notes/positionList')
             .send({notes: notes}).set('Content-Type', 'application/json')
             .set('Authorization', apiKey)
-            .end(function(err,res){});
+            .end(function(err,res){
+              console.log(res);
+            });
     }
 
     static deleteNote(apiKey,note,callback){
@@ -55,7 +69,7 @@ export default class AjaxRequestLib {
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .set('Authorization', apiKey)
             .end(function (err, res) {
-                callback();
+                callback(res,err);
             });
     }
 

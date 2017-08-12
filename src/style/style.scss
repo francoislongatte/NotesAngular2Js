@@ -16,12 +16,10 @@ $tailleDateWrapper : 60px;
     all: unset;
   }
   @include airykson-reset;
-
-  position: relative;
-
 }
 
-.Rwrapper{
+
+.R_noteApp .Rwrapper{
   font-family: 'Source Sans Pro', sans-serif;
 
   width: 320px;
@@ -57,7 +55,7 @@ $tailleDateWrapper : 60px;
     flex-direction: column;
 
     pointer-events: visible;
-    > div{
+    > *{
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -71,6 +69,7 @@ $tailleDateWrapper : 60px;
       margin: 0;
       transform: translate3d(0,0,0);
       border-bottom: 1px solid #d6d8db;
+      flex: 1 0;
     }
 
     transition: transform .4s;
@@ -211,6 +210,7 @@ $tailleDateWrapper : 60px;
     -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     margin:5px 0 0;
+    text-align: left;
   }
 
   .form-control::-webkit-input-placeholder{
@@ -223,6 +223,7 @@ $tailleDateWrapper : 60px;
     box-shadow: none;
     -webkit-box-shadow: none;
     color: #ffffff;
+    text-align: center;
   }
 
   textarea.form-control{
@@ -242,6 +243,7 @@ $tailleDateWrapper : 60px;
     text-align: center;
     border-bottom: 1px solid #d6d8db;
     padding: 6px 6px 12px 6px;
+    display: block;
   }
 
   .formUpdate label{
@@ -264,109 +266,115 @@ $tailleDateWrapper : 60px;
     list-style: none;
     overflow: auto;
     padding:6px;
+    display: block;
   }
 
-  .noteItem:first-of-type{
+  .anNote_noteItem:first-of-type{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
   }
 
-  .noteItem:last-of-type{
+  .anNote_noteItem:last-of-type{
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
   }
+}
 
-  .noteItem{
-    margin: 0;
-    overflow: hidden;
+.anNote_noteItem,.Rwrapper .anNote_noteItem{
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+
+  position: relative;
+  background-color: white;
+  border-radius: 2px;
+  border:1px solid #ebeff6;
+  border-top:none;
+
+  display:flex;
+
+  font-weight: 200;
+  cursor: pointer;
+
+
+  &.gu-mirror {
+    opacity: 0.8;
+    border-radius: 20px;
+  }
+
+  p{
+    font-size:0.9em;
+    margin:0;
     width: 100%;
-    padding: 0;
+  }
 
-    position: relative;
-    background-color: white;
-    border-radius: 2px;
-    border:1px solid #ebeff6;
-    border-top:none;
+  h2{
+    font-size:1.1em;
+    margin:0;
+    font-weight: 400;
+    margin-bottom: 9px
+  }
 
-    display:flex;
+  a{
+    text-decoration: none;
+    color:white;
+  }
 
-    font-weight: 200;
+  .draggableSpan{
+    width: 24px;
+    background: url('/assets/iconSvg/dots-three-vertical.svg');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .btn{
+    border:none;
+    display: inline-block;
+  }
+
+  .btnDelete{
+    width:26px;
+    background: url('/assets/iconSvg/cross.svg');
+    background-position: center center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
     cursor: pointer;
+  }
 
+
+  .contentLi{
+    float:left;
+    width:calc(100% - 24px);
+    padding:15px 5px;
+    .timeNote{
+      color: #979797;
+      font-size:0.7em;
+      font-weight: 100;
+    }
 
     p{
-      font-size:0.9em;
-      margin:0;
-      width: 100%;
+      font-size: 0.8em;
+      font-weight: 200;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
     }
 
-    h2{
-      font-size:1.1em;
-      margin:0;
+    .tile{
+      font-size: 1.10em;
+      text-transform: capitalize;
       font-weight: 400;
-      margin-bottom: 9px
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom:5px;
     }
 
-    a{
-      text-decoration: none;
-      color:white;
-    }
+  }
 
-    .draggableSpan{
-      width: 24px;
-      background: url('../iconSvg/dots-three-vertical.svg');
-      background-size: 20px 20px;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
-
-    .btn{
-      border:none;
-      display: inline-block;
-    }
-
-    .btnDelete{
-      width:26px;
-      background: url('../iconSvg/cross.svg');
-      background-position: center center;
-      background-size: 20px 20px;
-      background-repeat: no-repeat;
-      cursor: pointer;
-    }
-
-
-    .contentLi{
-      float:left;
-      width:calc(100% - 24px);
-      padding:15px 5px;
-
-      .timeNote{
-        color: #979797;
-        font-size:0.7em;
-        font-weight: 100;
-      }
-
-      p{
-        font-size: 0.8em;
-        font-weight: 200;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .tile{
-        font-size: 1.10em;
-        text-transform: capitalize;
-        font-weight: 400;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom:5px;
-      }
-
-    }
-
-    .draggableSpan{
-      cursor: move;
-      cursor: -webkit-grabbing;
-    }
+  .draggableSpan{
+    cursor: move;
+    cursor: -webkit-grabbing;
   }
 }

@@ -1,3 +1,16 @@
-<h1>
-  {{title}}
-</h1>
+<div class="R_noteApp">
+  <div class="Rwrapper">
+    <div class="timeAn" [ngClass]="{'transition': transitionClass}" (click)="transition()">
+      <time >
+        <span class="month">06</span>
+        <span class="dayN">16</span>
+        <span class="day">Mercredi</span>
+        <span class="title">Note App</span>
+      </time>
+    </div>
+   <div class="app" [ngClass]="{'transition': transitionClass}">
+    <h1>Note</h1>
+     <router-outlet></router-outlet>
+  </div>
+  </div>
+</div>

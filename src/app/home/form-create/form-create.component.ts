@@ -2,16 +2,16 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-form-login',
-  templateUrl: './form-login.component.html'
+  selector: 'app-form-create',
+  templateUrl: './form-create.component.html'
 })
-export class FormLoginComponent implements OnInit {
+export class FormCreateComponent implements OnInit {
 
-  formGroupLogin: FormGroup;
-  @Output() loginSubmit$: EventEmitter<any>;
+  formGroupCreate: FormGroup;
+  @Output() createSubmit$: EventEmitter<any>;
 
   constructor(public formBuilder: FormBuilder) {
-    this.loginSubmit$ = new EventEmitter();
+    this.createSubmit$ = new EventEmitter();
   }
 
   ngOnInit() {
@@ -34,15 +34,15 @@ export class FormLoginComponent implements OnInit {
      */
 
     /* Meilleur facon */
-    this.formGroupLogin = this.formBuilder.group({
-      email: [null, Validators.required],
-      password: [null, Validators.required]
+    this.formGroupCreate = this.formBuilder.group({
+      title: [null, Validators.required],
+      text: [null, Validators.required]
     });
 
   }
 
-  submit(person: any) {
-    this.loginSubmit$.emit(person);
+  submit(note: any) {
+    this.createSubmit$.emit(note);
   }
 
 }
