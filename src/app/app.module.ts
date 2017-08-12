@@ -30,7 +30,8 @@ import { SignupComponent } from './signup/signup.component';
     APP_ROUTES
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    ...AUTH_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })
